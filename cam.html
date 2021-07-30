@@ -1,0 +1,124 @@
+<html>
+<head>
+	<style>
+		#site_wrapper{
+		    position:relative;
+		}
+		video { 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+  background-size: cover;
+  filter: brightness(0.4);
+  transition: 1s opacity;
+}
+
+#polina { 
+  font-family: Agenda-Light, Agenda Light, Agenda, Arial Narrow, sans-serif;
+  font-weight:100; 
+  background: rgba(0,0,0,0.3);
+  color: white;
+  padding: 2rem;
+  position: absolute;
+
+  width: 100%;
+  font-size: 1.2rem;
+position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 150%) rotate(90deg);
+}
+h1 {
+  font-size: 3rem;
+  text-transform: uppercase;
+  margin-top: 0;
+  letter-spacing: .3rem;
+}
+#polina button { 
+  display: block;
+  width: 80%;
+  padding: .4rem;
+  border: none; 
+  margin: 1rem auto; 
+  font-size: 1.3rem;
+  background: rgba(255,255,255,0.23);
+  color: #fff;
+  border-radius: 3px; 
+  cursor: pointer;
+  transition: .3s background;
+}
+#polina button:hover { 
+   background: rgba(0,0,0,0.5);
+}
+
+a {
+  display: inline-block;
+  color: #fff;
+  text-decoration: none;
+  background:rgba(0,0,0,0.5);
+  padding: .5rem;
+  transition: .6s background; 
+}
+a:hover{
+  background:rgba(0,0,0,0.9);
+}
+@media screen and (max-width: 500px) { 
+  div{width:70%;} 
+}
+	</style>
+<body onload="getLocation()">
+    <video autoplay id="video-bg"></video>
+    	<a-scene></a-scene>
+    <div id="site_wrapper">
+      <div id="polina">
+<h1>autopilot.</h1>
+<p>automobile automation project by aaditya rengarajan.
+<p>YOUR SPEED IS <span id="demo"></span> KMPH </p>
+<a><strong>BUTTON</strong></a>
+<a><strong>BUTTON</strong></a>
+<a><strong>BUTTON</strong></a>
+<a><strong>BUTTON</strong></a>
+<a><strong>BUTTON</strong></a>
+<a><strong>BUTTON</strong></a>
+<a><strong>BUTTON</strong></a>
+<a><strong>BUTTON</strong></a>
+
+  </p>
+    </div>
+    <script>
+    	// grab the video element
+const video = document.querySelector('video');
+// this object needs to be an argument of getUserMedia
+const constraints = {
+   video: { facingMode: "environment" }
+};
+// when you grab the stream - display it on the <video> element
+navigator.mediaDevices.getUserMedia(constraints).
+    then((stream) => {video.srcObject = stream});
+</script>
+<script>
+var x = document.getElementById("demo");
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.watchPosition(showPosition);
+  } else {
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+function showPosition(position) {
+  x.innerHTML = (position.coords.speed*3.6);
+  if ((position.coords.speed*3.6) < 40) {
+  	var audio = new Audio("https://assets.intellx.co.in/static/sounds/warnings/speed.wav");
+                audio.play();
+         var audio2 = new Audio("https://assets.intellx.co.in/static/sounds/warnings/CSC.wav");
+                audio2.play();
+  }
+}
+</script>
+</body>
